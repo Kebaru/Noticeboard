@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "221536992394",
+    "project_id": "noticeboard-f57fb",
+    "storage_bucket": "noticeboard-f57fb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:221536992394:android:bd14a9a47755cd5255c173",
+        "android_client_info": {
+          "package_name": "com.example.noticeboard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "221536992394-4iks44mfi2l94vq0duh2avb96vqvmrn6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEmInBKIHBXpEa0Khaibjr0hEfAXjDh8w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "221536992394-4iks44mfi2l94vq0duh2avb96vqvmrn6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
