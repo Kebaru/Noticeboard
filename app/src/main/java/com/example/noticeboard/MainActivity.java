@@ -3,6 +3,7 @@ package com.example.noticeboard;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.os.Bundle;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private NavigationView nav_view;
     private FirebaseAuth mAuth;
+    private DrawerLayout drawerLayout;
     private TextView userEmail;
     private AlertDialog dialog;
     @Override
@@ -80,6 +82,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         nav_view = findViewById(R.id.nav_view);
         nav_view.setNavigationItemSelectedListener(this);
         userEmail = nav_view.getHeaderView(0).findViewById(R.id.tvEmail);
+        drawerLayout = findViewById(R.id.drawerLayout);
+        drawerLayout.openDrawer(GravityCompat.START);
         FirebaseDatabase database = FirebaseDatabase.getInstance("https://noticeboard-f57fb-default-rtdb.europe-west1.firebasedatabase.app/");
         mAuth = FirebaseAuth.getInstance();
         DatabaseReference myRef = database.getReference("Noticeboard");

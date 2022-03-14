@@ -16,7 +16,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.2"
-        tools:srcCompat="@android:drawable/ic_lock_idle_alarm" />
+        tools:srcCompat="@android:drawable/ic_lock_idle_alarm"
+        android:src="@android:drawable/ic_lock_idle_alarm"/>
 
     <TextView
         android:id="@+id/tvEmail"
