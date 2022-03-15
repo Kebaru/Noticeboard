@@ -1,11 +1,14 @@
 package com.example.noticeboard;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +21,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawerLayout;
     private TextView userEmail;
     private AlertDialog dialog;
+    private Toolbar toolbar;
+    private FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,15 +85,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void Init(){
+        fab = findViewById(R.id.fab_edit);
         nav_view = findViewById(R.id.nav_view);
         nav_view.setNavigationItemSelectedListener(this);
         userEmail = nav_view.getHeaderView(0).findViewById(R.id.tvEmail);
         drawerLayout = findViewById(R.id.drawerLayout);
-        drawerLayout.openDrawer(GravityCompat.START);
-        FirebaseDatabase database = FirebaseDatabase.getInstance("https://noticeboard-f57fb-default-rtdb.europe-west1.firebasedatabase.app/");
+        toolbar = findViewById(R.id.toolbar);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.toggle_open, R.string.toggle_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
         mAuth = FirebaseAuth.getInstance();
-        DatabaseReference myRef = database.getReference("Noticeboard");
-        myRef.setValue("Hello, World!");
+        //myRef.setValue("Hello, World!");
+    }
+
+    public void onClickEdit(View view){
+        Intent intent = new Intent(MainActivity.this, EditActivity.class);
+        startActivity(intent);
     }
 
     @Override

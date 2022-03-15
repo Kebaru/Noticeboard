@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -35,6 +37,8 @@ public class EditActivity extends AppCompatActivity {
     private Uri uploadUri;
     private Spinner spinner;
     private DatabaseReference dbRef;
+    private FirebaseAuth mAuth;
+    private EditText etTitle, etPrice, etPhone, etDescription;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +47,11 @@ public class EditActivity extends AppCompatActivity {
     }
 
     private void Init(){
+        etTitle = findViewById(R.id.et_title);
+        etPhone = findViewById(R.id.et_phone);
+        etPrice = findViewById(R.id.et_price);
+        etDescription = findViewById(R.id.et_description);
+
         spinner = findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.category_spinner, android.R.layout.simple_spinner_item);
@@ -95,7 +104,7 @@ public class EditActivity extends AppCompatActivity {
 
     public void onClickSavePost(View view)
     {
-
+        savePost();
     }
 
     public void onClickImage(View view)
@@ -110,6 +119,19 @@ public class EditActivity extends AppCompatActivity {
     }
 
     private void savePost(){
-        dbRef = FirebaseDatabase.getInstance().getReference(spinner.getSelectedItem().toString());
+        dbRef = FirebaseDatabase.getInstance("https://noticeboard-f57fb-default-rtdb.europe-west1.firebasedatabase.app/").getReference(spinner.getSelectedItem().toString());
+        mAuth = FirebaseAuth.getInstance();
+        if(mAuth.getUid() != null)
+        {
+            String key = dbRef.push().getKey();
+            NewPost post = new NewPost();
+            post.setImageId(uploadUri.toString());
+            post.setTitle(etTitle.getText().toString());
+            post.setPhone(etPhone.getText().toString());
+            post.setPrice(etPrice.getText().toString());
+            post.setDescription(etDescription.getText().toString());
+            post.setKey(key);
+            if(key != null) dbRef.child(mAuth.getUid()).child(key).setValue(post);
+        }
     }
 }
